@@ -1,0 +1,16 @@
+packages:
+  - .
+
+# Flat, real-file node_modules (like npm). Required so the Netlify function
+# tracer can copy dependencies into the SSR zip correctly.
+nodeLinker: hoisted
+
+overrides:
+  rolldown: 1.2.1
+
+# Allow esbuild's install script (binary verification).
+onlyBuiltDependencies:
+  - esbuild
+
+allowBuilds:
+  esbuild: true
