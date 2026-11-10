@@ -14,3 +14,6 @@ onlyBuiltDependencies:
 
 allowBuilds:
   esbuild: true
+
+patchedDependencies:
+  '@netlify/edge-functions-dev': patches/@netlify__edge-functions-dev.patch
