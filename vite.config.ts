@@ -15,6 +15,13 @@ export default defineConfig({
     }),
     viteReact(),
     tailwindcss(),
-    netlify(),
+    netlify({
+      dev: {
+        // The middleware's static emulation serves project files raw before
+        // Vite's transform pipeline, so Tailwind never compiles in dev.
+        // Disable it; Vite dev serves publicDir assets itself.
+        staticFiles: { enabled: false },
+      },
+    }),
   ],
 });
