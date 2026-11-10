@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  @font-face {
+    font-family: "Chakra Petch";
+    src: url("file:///C:/Users/artif/AppData/Local/Temp/otg-fonts/ChakraPetch-Bold.ttf");
+    font-weight: 700;
+  }
+  @font-face {
+    font-family: "JetBrains Mono";
+    src: url("file:///C:/Users/artif/AppData/Local/Temp/otg-fonts/JetBrainsMono.ttf");
+    font-weight: 100 800;
+  }
+
+  :root {
+    /* App palette (light theme), verbatim from src/styles.css */
+    --background: oklch(0.93 0.02 204.4);
+    --foreground: oklch(0.266 0.025 208.4);
+    --card: oklch(0.96 0.011 204.1);
+    --primary: oklch(0.946 0.204 110.6);
+    --secondary: oklch(0.876 0.034 208);
+    --surface: oklch(1 0 0);
+    --muted-foreground: oklch(0.52 0.025 207);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    width: 512px;
+    height: 512px;
+    overflow: hidden;
+  }
+  body {
+    background: var(--card);
+    color: var(--foreground);
+    font-family: "JetBrains Mono", monospace;
+    /* outer app frame: heavy black border like the app's card */
+    border: 14px solid var(--foreground);
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ---------- top credential bar ---------- */
+  .bar {
+    height: 64px;
+    background: var(--secondary);
+    border-bottom: 4px solid var(--foreground);
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+  }
+  .bar .label {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding-left: 22px;
+    font-size: 19px;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+  }
+  .bar .label .dot {
+    width: 13px; height: 13px;
+    border-radius: 9999px;
+    background: var(--foreground);
+    flex: 0 0 auto;
+  }
+  .bar .stamp {
+    width: 74px;
+    background: var(--primary);
+    border-left: 4px solid var(--foreground);
+  }
+
+  /* ---------- the grid ---------- */
+  .grid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 5px;
+    padding: 22px;
+    background: var(--card);
+  }
+  .cell {
+    border: 4px solid var(--foreground);
+    background: var(--surface);
+    position: relative;
+  }
+  .cell.spent {
+    background: var(--foreground);
+  }
+  .cell.running {
+    background: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .cell.running .clock {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 58px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+    color: var(--foreground);
+    transform: translateY(2px);
+  }
+  /* faint progress rule inside running cell */
+  .cell.running .rule {
+    position: absolute;
+    left: 10px; right: 10px; bottom: 8px;
+    height: 5px;
+    background:
+      linear-gradient(to right,
+        var(--foreground) 0 62%,
+        color-mix(in oklab, var(--foreground) 25%, transparent) 62%);
+  }
+
+  /* ---------- bottom machine band ---------- */
+  .foot {
+    height: 56px;
+    background: var(--secondary);
+    border-top: 4px solid var(--foreground);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 22px;
+  }
+  .foot .mono {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.3em;
+  }
+  .foot .matrix {
+    display: flex;
+    gap: 7px;
+  }
+  .foot .matrix span {
+    width: 11px; height: 11px;
+    border-radius: 9999px;
+    background: var(--foreground);
+  }
+  .foot .matrix span.dim { opacity: 0.25; }
+</style>
+</head>
+<body>
+  <div class="bar">
+    <div class="label"><span class="dot"></span>OTG</div>
+    <div class="stamp"></div>
+  </div>
+
+  <div class="grid">
+    <!-- row 1: spent -->
+    <div class="cell spent"></div>
+    <div class="cell spent"></div>
+    <div class="cell spent"></div>
+    <div class="cell spent"></div>
+    <!-- row 2: spent, then the running signal -->
+    <div class="cell spent"></div>
+    <div class="cell running"><div class="clock">25</div><div class="rule"></div></div>
+    <div class="cell"></div>
+    <div class="cell"></div>
+    <!-- row 3: pending -->
+    <div class="cell"></div>
+    <div class="cell"></div>
+    <div class="cell"></div>
+    <div class="cell"></div>
+  </div>
+
+  <div class="foot">
+    <div class="mono">OFF&nbsp;THE&nbsp;GRID</div>
+    <div class="matrix">
+      <span></span><span></span><span></span><span class="dim"></span><span class="dim"></span><span class="dim"></span><span class="dim"></span><span class="dim"></span>
+    </div>
+  </div>
+</body>
+</html>
